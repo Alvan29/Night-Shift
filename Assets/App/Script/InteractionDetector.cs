@@ -1,37 +1,45 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractionDetector : MonoBehaviour
 {
-    private IInteractable detectedObject;
+    private IPickupable item;
+
+    [SerializeField] private GameObject player;
+    PlayerInput playerInput;
+    InputAction interact;
+
+    private void Start()
+    {
+        playerInput = player.GetComponent<PlayerInput>();
+        interact = playerInput.actions.FindAction("Interact");
+    }
+
+    private void Update()
+    {
+        if (interact.WasPressedThisFrame() && item != null)
+        {
+            item.OnPickup();
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
         Outline outline = other.GetComponent<Outline>();
-        IInteractable interactable = other.GetComponent<IInteractable>();
-        IPickupable pickup = other.GetComponent<IPickupable>();
-        if (interactable != null)
+        item = other.GetComponent<IPickupable>();
+        if (item != null)
         {
             outline.OutlineMode = Outline.Mode.OutlineVisible;
-            detectedObject = interactable;
+            
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        Outline outline = other.GetComponent<Outline>();
-        IInteractable interactable = other.GetComponent<IInteractable>();
-        if (interactable != null && detectedObject == interactable)
+        if (item != null)
         {
-            outline.OutlineMode = Outline.Mode.OutlineHidden;
-            detectedObject = null;
-        }
-    }
-
-    public void TryInteract()
-    {
-        if (detectedObject != null)
-        {
-            detectedObject.Interact();
+            other.GetComponent<Outline>().OutlineMode = Outline.Mode.OutlineHidden;
+            item = null;
         }
     }
 }

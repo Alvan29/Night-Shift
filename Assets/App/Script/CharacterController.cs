@@ -8,7 +8,6 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 7f;
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject body;
-    private Vector2 lookInput;
     private float yaw;
     private float pitch;
     private float currentSpeed;
@@ -54,13 +53,10 @@ public class CharacterController : MonoBehaviour
     }
 
     private void onLook() { 
-        lookInput = lookAction.ReadValue<Vector2>();
-        yaw += lookInput.x * lookSensitivity * Time.deltaTime;
-        pitch -= lookInput.y * lookSensitivity * Time.deltaTime;
-        pitch = Mathf.Clamp(pitch, -90f, 90f);
-
-        transform.rotation = Quaternion.Euler(0f, yaw, 0f); // Player body
-        cam.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f); // Camera up-down
+        Vector2 lookInput = lookAction.ReadValue<Vector2>();
+        lookInput.Normalize();
+        body.transform.Rotate(Vector3.up, lookInput.x * Time.deltaTime * lookSensitivity); // Player body
+        cam.transform.Rotate(Vector3.left, lookInput.y * Time.deltaTime * lookSensitivity); // Camera up-down
     }
 
     private void onSprint()

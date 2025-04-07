@@ -986,10 +986,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 482680209}
-  - component: {fileID: 482680213}
   - component: {fileID: 482680212}
   - component: {fileID: 482680211}
-  - component: {fileID: 482680214}
+  - component: {fileID: 482680216}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1005,15 +1004,16 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 482680208}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.21806425, z: -0, w: 0.97593445}
-  m_LocalPosition: {x: -0.000000104320115, y: 1.03, z: -2.56}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.44, y: 1.13, z: 5.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1547756934}
   - {fileID: 1821116828}
+  - {fileID: 1534832908}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 25.191, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &482680211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1056,7 +1056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 939d3bfd5c4e61944a888de716aff3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookSensitivity: 2
+  lookSensitivity: 100
   walkSpeed: 5
   sprintSpeed: 9
   cam: {fileID: 1821116831}
@@ -1067,8 +1067,8 @@ MonoBehaviour:
   staminaDrain: 1
   staminaRegen: 0.5
   detector: {fileID: 0}
---- !u!143 &482680213
-CharacterController:
+--- !u!136 &482680216
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1082,312 +1082,14 @@ CharacterController:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
+  serializedVersion: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &482680214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482680208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1384774831, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fsm:
-    dataVersion: 2
-    usedInTemplate: {fileID: 0}
-    name: First Person
-    startState: Lock and Cursor Lock
-    states:
-    - name: Lock and Cursor Lock
-      description: 
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 62.546875
-        y: 108.88281
-        width: 157.20999
-        height: 16
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions: []
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.Comment
-        - HutongGames.PlayMaker.Actions.MouseLook
-        - HutongGames.PlayMaker.Actions.MouseLook
-        - HutongGames.PlayMaker.Actions.SetMouseCursor
-        customNames:
-        - 
-        - Mouse Look - To turn player gameObject left and right
-        - Mouse Look - To tilt camera up and down
-        - Set Mouse Cursor - To hide the cursor and lock to screen center
-        actionEnabled: 01010101
-        actionIsOpen: 01010101
-        actionStartIndex: 00000000010000000a00000013000000
-        actionHashCodes: 78c53001e6fd4500e6fd4500074b1504
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 482680208}
-        - ownerOption: 1
-          gameObject:
-            useVariable: 1
-            name: playerCamera
-            tooltip: 
-            showInInspector: 1
-            networkSync: 0
-            value: {fileID: 1821116827}
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        fsmVarParams: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: mouseSensitivity
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 2
-        - useVariable: 1
-          name: mouseSensitivity
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 2
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: mouseSensitivity
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 2
-        - useVariable: 1
-          name: mouseSensitivity
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 2
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: -50
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 50
-        fsmIntParams: []
-        fsmBoolParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 1
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 1
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams:
-        - "The first MouseLook action uses the screen X axis to rotate the player
-          body left and right. Parent your camera to the player body gameobject so
-          the camera turns with it. \n\nThe second MouseLook action uses the screen
-          Y axis to rotate the camera gameObject on it's X axis, so it tilts up and
-          down when you move the mouse up and down. \n\nThe SetMouseCursor action
-          will prevent your mouse cursor from appearing on the screen, and will also
-          lock it to the center of the screen so it doesn't accidentally move to
-          other windows/screens/panels. "
-        byteData: 0100000001020000000100
-        arrayParamSizes: 
-        arrayParamTypes: []
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 0300000014000000070000000f0000000f0000000f0000000f0000000f0000000f0000000100000014000000070000000f0000000f0000000f0000000f0000000f0000000f0000000100000021000000110000001100000001000000
-        paramName:
-        - comment
-        - gameObject
-        - axes
-        - sensitivityX
-        - sensitivityY
-        - minimumX
-        - maximumX
-        - minimumY
-        - maximumY
-        - everyFrame
-        - gameObject
-        - axes
-        - sensitivityX
-        - sensitivityY
-        - minimumX
-        - maximumX
-        - minimumY
-        - maximumY
-        - everyFrame
-        - cursorTexture
-        - hideCursor
-        - lockCursor
-        - everyFrame
-        paramDataPos: 000000000000000000000000000000000100000002000000030000000400000005000000040000000100000005000000060000000700000008000000090000000a0000000b000000090000000000000000000000010000000a000000
-        paramByteDataSize: 0000000000000000040000000000000000000000000000000000000000000000000000000100000000000000040000000000000000000000000000000000000000000000000000000100000000000000000000000000000001000000
-    events: []
-    globalTransitions: []
-    variables:
-      floatVariables:
-      - useVariable: 1
-        name: mouseSensitivity
-        tooltip: 
-        showInInspector: 1
-        networkSync: 0
-        value: 2
-      intVariables: []
-      boolVariables: []
-      stringVariables: []
-      vector2Variables: []
-      vector3Variables: []
-      colorVariables: []
-      rectVariables: []
-      quaternionVariables: []
-      gameObjectVariables:
-      - useVariable: 1
-        name: playerCamera
-        tooltip: 
-        showInInspector: 1
-        networkSync: 0
-        value: {fileID: 1821116827}
-      objectVariables: []
-      materialVariables: []
-      textureVariables: []
-      arrayVariables: []
-      enumVariables: []
-      categories:
-      - 
-      variableCategoryIDs: 0000000000000000
-    description: 
-    docUrl: 
-    showStateLabel: 0
-    maxLoopCount: 0
-    watermark: 
-    password: 
-    locked: 0
-    manualUpdate: 0
-    outVariableIndices: 
-    keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
-    ExposedEvents: []
-    OutputEvents: []
-    RestartOnEnable: 1
-    ResetVariablesOnEnable: 0
-    EnableDebugFlow: 0
-    EnableBreakpoints: 1
-    editorFlags: 225
-    activeStateName: 
-    mouseEvents: 0
-    handleLevelLoaded: 0
-    handleTriggerEnter2D: 0
-    handleTriggerExit2D: 0
-    handleTriggerStay2D: 0
-    handleCollisionEnter2D: 0
-    handleCollisionExit2D: 0
-    handleCollisionStay2D: 0
-    handleTriggerEnter: 0
-    handleTriggerExit: 0
-    handleTriggerStay: 0
-    handleCollisionEnter: 0
-    handleCollisionExit: 0
-    handleCollisionStay: 0
-    handleParticleCollision: 0
-    handleControllerColliderHit: 0
-    handleJointBreak: 0
-    handleJointBreak2D: 0
-    handleOnGUI: 0
-    handleFixedUpdate: 0
-    handleLateUpdate: 0
-    handleApplicationEvents: 0
-    handleUiEvents: 0
-    handleLegacyNetworking: 0
-    handleAnimatorMove: 0
-    handleAnimatorIK: 0
-  fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
 --- !u!1 &538478081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1738,7 +1440,8 @@ GameObject:
   - component: {fileID: 848014727}
   - component: {fileID: 848014726}
   - component: {fileID: 848014730}
-  - component: {fileID: 848014731}
+  - component: {fileID: 848014732}
+  - component: {fileID: 848014733}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1761,7 +1464,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1853,7 +1556,34 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &848014731
+--- !u!54 &848014732
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848014725}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &848014733
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1865,6 +1595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0305f9975ec4d4ba9ead62a09243a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 1534832908}
 --- !u!1 &868762180
 GameObject:
   m_ObjectHideFlags: 0
@@ -2529,6 +2260,37 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 455872203}
   m_SourcePrefab: {fileID: 100100000, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
+--- !u!1 &1534832907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1534832908}
+  m_Layer: 0
+  m_Name: Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1534832908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534832907}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.416, y: 0.258, z: 0.661}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 482680209}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1536184659
 GameObject:
   m_ObjectHideFlags: 0
@@ -3298,6 +3060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9e2451325a16c248b1f2b2d9b16f0ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 482680208}
 --- !u!54 &1908764368
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3448,7 +3211,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!23 &2107807299
 MeshRenderer:
