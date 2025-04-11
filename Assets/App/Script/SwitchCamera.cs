@@ -4,7 +4,12 @@ public class SwitchCamera : MonoBehaviour
 {
     [SerializeField] private Camera[] cameras;
     [SerializeField] private string cameraOn;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Outline outline;
+
+    private void Start()
+    {
+        outline = GetComponent<Outline>();
+    }
 
     public void enableCamera(string cameraOn)
     {
@@ -23,19 +28,19 @@ public class SwitchCamera : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.CompareTag("Detector"))
         {
-            for (int i = 0; i < cameras.Length; i++)
-            {
-                if (cameras[i].name == cameraOn)
-                {
-                    cameras[i].enabled = true;
-                }
-                else
-                { 
-                    cameras[i].enabled = false;
-                }
-            }
+            outline.OutlineMode = Outline.Mode.OutlineVisible;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Detector"))
+        {
+            outline.OutlineMode = Outline.Mode.OutlineHidden;
+        }
+    }
+
+
 }

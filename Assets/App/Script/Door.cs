@@ -1,17 +1,13 @@
+using UnityEditor;
 using UnityEngine;
 
-public class Door : MonoBehaviour, IPickupable
+public class Door : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    [SerializeField] private Transform pivot;
     private void OpenDoor()
     {
         Debug.Log("Door Opened!");
     }
 
-    public void OnPickup()
-    {
-        // gameObject.SetActive(false);
-        gameObject.transform.SetParent(target, false);
-        transform.position = target.transform.position;
-    }
+    
 }
