@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5578446b0a62d0b43a8bf2f942d77b96
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - icon: {instanceID: 0}
+  - prefabInHand: {fileID: 7169951340465270652, guid: 3227d5d9aad3b6e4e8080598dec2a5b8, type: 3}
+  - worldDropPrefab: {fileID: 951551242945623436, guid: 8e3b3215dd74334458e5bf822874182a, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
