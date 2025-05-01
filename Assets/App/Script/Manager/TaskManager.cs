@@ -8,8 +8,9 @@ public class TaskManager : MonoBehaviour
     {
         public string taskName;
         public GameObject taskObject;
+        public MonoBehaviour taskScript;
         public bool isActive = false;
-        public float panicIncrease = 0.2f;
+        public float panicIncrease = 0.2f; // per second
     }
 
     public List<Task> tasks;
@@ -28,11 +29,19 @@ public class TaskManager : MonoBehaviour
 
     private void Update()
     {
-        if (panicLevel > 0f)
+        float activePanicGain = 0f;
+
+        foreach (Task task in tasks)
         {
-            panicLevel -= panicDecayRate * Time.deltaTime;
-            panicLevel = Mathf.Clamp01(panicLevel);
+            if (task.isActive)
+            {
+                activePanicGain += task.panicIncrease * Time.deltaTime;
+            }
         }
+
+        panicLevel += activePanicGain;
+        panicLevel -= panicDecayRate * Time.deltaTime;
+        panicLevel = Mathf.Clamp(panicLevel, 0f, maxPanic);
     }
 
     private System.Collections.IEnumerator RandomTaskActivator()
@@ -63,10 +72,7 @@ public class TaskManager : MonoBehaviour
         if (task.taskObject != null)
             task.taskObject.SetActive(true);
 
-        panicLevel += task.panicIncrease;
-        panicLevel = Mathf.Clamp01(panicLevel);
-
-        Debug.Log($"Task Aktif: {task.taskName}, Panic: {panicLevel}");
+        Debug.Log($"Task Aktif: {task.taskName}");
     }
 
     public void CompleteTask(string taskName)
@@ -75,8 +81,10 @@ public class TaskManager : MonoBehaviour
         if (task != null && task.isActive)
         {
             task.isActive = false;
-            if (task.taskObject != null)
-                task.taskObject.SetActive(false);
+            task.taskScript.enabled = false;
+            PlayerController.canMove = true;
+            //if (task.taskObject != null)
+            //    task.taskObject.SetActive(false);
 
             Debug.Log($"Task Selesai: {task.taskName}");
         }
