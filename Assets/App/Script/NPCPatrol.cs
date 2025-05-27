@@ -1,93 +1,70 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
+using System.Collections;
 
 public class NPCPatrol : MonoBehaviour
 {
-    public Transform[] waypoints;
-    public float speed = 2f;
-    private int currentWaypointIndex = 0;
+    [SerializeField] private Transform[] waypoints;
+    [SerializeField] private float waitTime = 2f;
+    [SerializeField] private int sitWaypointIndex = 1;
+    [SerializeField] private int idleWaypointIndex = 1;
 
     [Header("Panic Settings")]
-    public float panicLevel = 0f;
-    public float panicIncreaseAmount = 10f;
-    public float panicDecayRate = 2f;
-    public float maxPanic = 100f;
+    [SerializeField] private float panicLevel = 0f;
+    [SerializeField] private float panicIncreaseAmount = 10f;
+    [SerializeField] private float panicDecayRate = 2f;
+    [SerializeField] private float maxPanic = 100f;
 
-    [Header("Sit & Idle Settings")]
-    public int sitWaypointIndex = 1; // Waypoint where NPC sits
-    public int idleWaypointIndex = 4; // Waypoint where NPC idles
-    public float waitTime = 3f;
-    private float waitTimer = 0f;
-    private bool isWaiting = false;
-
+    private NavMeshAgent agent;
     private Animator animator;
+    private int currentIndex = 0;
+    private bool isWaiting = false;
 
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        SetWalkingState(true);
+
+        if (waypoints.Length > 0)
+            agent.SetDestination(waypoints[currentIndex].position);
     }
 
     void Update()
     {
-        if (isWaiting)
-        {
-            waitTimer -= Time.deltaTime;
-            if (waitTimer <= 0f)
-            {
-                isWaiting = false;
-                animator.SetBool("isSitting", false);
-                animator.SetBool("isIdle", false);
-                SetWalkingState(true); // Start walking again after waiting
-                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
-            }
-            return;
-        }
+        if (isWaiting || waypoints.Length == 0) return;
 
-        Patrol();
+        animator.SetFloat("Speed", agent.velocity.magnitude);
         DecayPanic();
+
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            StartCoroutine(WaitAndMove());
+        }
     }
 
-    void Patrol()
+    private IEnumerator WaitAndMove()
     {
-        if (waypoints.Length == 0 || waypoints[currentWaypointIndex] == null) return;
+        isWaiting = true;
+        agent.isStopped = true;
+        animator.SetFloat("Speed", 0f);
 
-        Transform targetWaypoint = waypoints[currentWaypointIndex];
-        Vector3 direction = targetWaypoint.position - transform.position;
-
-        transform.position += direction.normalized * speed * Time.deltaTime;
-
-        // Check if NPC has reached the current waypoint
-        if (direction.magnitude < 0.2f)
+        if (currentIndex == sitWaypointIndex)
         {
-            // Handle sitting at the specified waypoint
-            if (currentWaypointIndex == sitWaypointIndex)
-            {
-                isWaiting = true;
-                waitTimer = waitTime;
-                SetWalkingState(false);
-                animator.SetBool("isSitting", true);
-            }
-            // Handle idling at the specified waypoint
-            else if (currentWaypointIndex == idleWaypointIndex)
-            {
-                isWaiting = true;
-                waitTimer = waitTime;
-                SetWalkingState(false);
-                animator.SetBool("isIdle", true);
-            }
-            else
-            {
-                // Move to the next waypoint
-                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
-            }
+            animator.SetBool("isSitting", true);
+        }
+        else if (currentIndex == idleWaypointIndex)
+        {
+            animator.SetBool("isIdle", true);
         }
 
-        // Smoothly rotate NPC to face the target waypoint
-        if (direction != Vector3.zero)
-        {
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-        }
+        yield return new WaitForSeconds(waitTime);
+
+        animator.SetBool("isSitting", false);
+        animator.SetBool("isIdle", false);
+        currentIndex = (currentIndex + 1) % waypoints.Length;
+        agent.SetDestination(waypoints[currentIndex].position);
+        agent.isStopped = false;
+        isWaiting = false;
     }
 
     void DecayPanic()
@@ -107,16 +84,6 @@ public class NPCPatrol : MonoBehaviour
             panicLevel += panicIncreaseAmount;
             panicLevel = Mathf.Clamp(panicLevel, 0f, maxPanic);
             Debug.Log($"{gameObject.name} mendengar suara! Panic: {panicLevel}");
-        }
-    }
-
-    void SetWalkingState(bool walking)
-    {
-        animator.SetBool("isWalking", walking);
-        if (walking)
-        {
-            animator.SetBool("isSitting", false);
-            animator.SetBool("isIdle", false);
         }
     }
 }
