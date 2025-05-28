@@ -1,13 +1,20 @@
-﻿using UnityEngine;
+﻿// File: AI/NPCPatrol.cs
+using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
+[System.Serializable]
+public class Waypoint
+{
+    public Transform point;
+    public float waitTime = 2f;
+    public bool sitHere;
+    public bool idleHere;
+}
+
 public class NPCPatrol : MonoBehaviour
 {
-    [SerializeField] private Transform[] waypoints;
-    [SerializeField] private float waitTime = 2f;
-    [SerializeField] private int sitWaypointIndex = 1;
-    [SerializeField] private int idleWaypointIndex = 1;
+    [SerializeField] private Waypoint[] waypoints;
 
     [Header("Panic Settings")]
     [SerializeField] private float panicLevel = 0f;
@@ -25,8 +32,8 @@ public class NPCPatrol : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        if (waypoints.Length > 0)
-            agent.SetDestination(waypoints[currentIndex].position);
+        if (waypoints.Length > 0 && waypoints[0].point != null)
+            agent.SetDestination(waypoints[0].point.position);
     }
 
     void Update()
@@ -48,21 +55,22 @@ public class NPCPatrol : MonoBehaviour
         agent.isStopped = true;
         animator.SetFloat("Speed", 0f);
 
-        if (currentIndex == sitWaypointIndex)
-        {
-            animator.SetBool("isSitting", true);
-        }
-        else if (currentIndex == idleWaypointIndex)
-        {
-            animator.SetBool("isIdle", true);
-        }
+        Waypoint current = waypoints[currentIndex];
 
-        yield return new WaitForSeconds(waitTime);
+        if (current.sitHere)
+            animator.SetBool("isSitting", true);
+        else if (current.idleHere)
+            animator.SetBool("isIdle", true);
+
+        yield return new WaitForSeconds(current.waitTime);
 
         animator.SetBool("isSitting", false);
         animator.SetBool("isIdle", false);
+
         currentIndex = (currentIndex + 1) % waypoints.Length;
-        agent.SetDestination(waypoints[currentIndex].position);
+        if (waypoints[currentIndex].point != null)
+            agent.SetDestination(waypoints[currentIndex].point.position);
+
         agent.isStopped = false;
         isWaiting = false;
     }
