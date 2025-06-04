@@ -32,6 +32,8 @@ public class NPCPatrol : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
+        animator.SetBool("isIdle", false);
+
         if (waypoints.Length > 0 && waypoints[0].point != null)
             agent.SetDestination(waypoints[0].point.position);
     }
@@ -58,7 +60,10 @@ public class NPCPatrol : MonoBehaviour
         Waypoint current = waypoints[currentIndex];
 
         if (current.sitHere)
+        {
             animator.SetBool("isSitting", true);
+            transform.localEulerAngles = new Vector3(0f, -170f, 0f);
+        }
         else if (current.idleHere)
             animator.SetBool("isIdle", true);
 

@@ -17,6 +17,7 @@ public class Raycasting : MonoBehaviour
             toTarget = hit.distance;
             distanceFromTarget = toTarget;
             targetObject = hit.collider.gameObject; // Simpan objek yang terkena ray
+            //Debug.Log(targetObject);
         }
         else
         {

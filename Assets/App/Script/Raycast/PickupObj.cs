@@ -4,10 +4,8 @@ using UnityEngine.InputSystem;
 public class PickupObj : MonoBehaviour, IPickupable
 {
     [SerializeField] Transform handParent;
-    [SerializeField] private PlayerInput playerInput;
-    private InputAction pick;
     private Rigidbody rb;
-    private bool canPick = true;
+    [SerializeField] private bool canPick = true;
 
     [SerializeField] string itemName;
     string IPickupable.ItemName => itemName;
@@ -15,19 +13,18 @@ public class PickupObj : MonoBehaviour, IPickupable
 
     void Start()
     {
-        pick = playerInput.actions.FindAction("Pick");
         rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Raycasting.targetObject == gameObject && canPick && pick.WasPerformedThisFrame())
+        if (Raycasting.targetObject == gameObject && canPick && PlayerController.pick.WasPerformedThisFrame())
         {
             OnPickup(handParent);
             
         }
-        else if (pick.WasPressedThisFrame() && canPick == false)
+        else if (PlayerController.pick.WasPressedThisFrame() && canPick == false)
         {
             OnDrop(transform.position + transform.TransformDirection(Vector3.forward) * 1.5f);
         }

@@ -23,7 +23,7 @@ ModelImporter:
     importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 3
-    animationRotationError: 0.5
+    animationRotationError: 0.2
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
@@ -37,20 +37,20 @@ ModelImporter:
       firstFrame: 0
       lastFrame: 494
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: -70
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
@@ -528,11 +528,16 @@ ModelImporter:
     skeleton:
     - name: Human1@Typing (1)(Clone)
       parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Game_engine
+      parentName: Human1@Typing (1)(Clone)
       position: {x: -0.01725603, y: -0.40297097, z: 0.20700654}
       rotation: {x: -0.08329149, y: 0.0049606515, z: -0.0086261565, w: 0.9964756}
       scale: {x: 1, y: 1, z: 1}
     - name: Root
-      parentName: Human1@Typing (1)(Clone)
+      parentName: Game_engine
       position: {x: -0, y: -0.00003, z: -0.025759999}
       rotation: {x: 0.49972722, y: -0.50027263, z: -0.49972722, w: 0.50027263}
       scale: {x: 1, y: 1, z: 1}
@@ -806,7 +811,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1

@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float sprintSpeed = 7f;
     [SerializeField] private bool isSprinting = false;
+    [SerializeField] private Animator animator;
     private float currentSpeed;
 
     [Header("Stamina")]
@@ -22,13 +23,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float currentStamina;
     [SerializeField] private float staminaDrain = 8;
     [SerializeField] private float staminaRegen = 5f;
-
+    
     private CharacterController controller;
     PlayerInput playerInput;
     InputAction moveAction;
     InputAction lookAction;
     InputAction sprintAction;
     public static InputAction interact;
+    public static InputAction pick;
     public static bool canMove = true;
 
     void Start()
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
         lookAction = playerInput.actions.FindAction("Look");
         sprintAction = playerInput.actions.FindAction("Sprint");
         interact = playerInput.actions.FindAction("Interact");
+        pick = playerInput.actions.FindAction("Pick");
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -61,6 +64,13 @@ public class PlayerController : MonoBehaviour
         Vector3 move = (transform.forward * direction.y) + (transform.right * direction.x);
         move.Normalize(); // Pastikan gerakan diagonal tidak lebih cepat
         controller.Move(move * currentSpeed * Time.deltaTime);
+
+        // Animation Speed control
+        //animator.SetFloat("Speed", direction.magnitude);
+        //animator.SetFloat("Direction", direction.y);
+        direction.Normalize();
+        //animator.SetFloat("InputX", direction.x);
+        //animator.SetFloat("InputY", direction.y);
     }
 
     private void onLook() { 
