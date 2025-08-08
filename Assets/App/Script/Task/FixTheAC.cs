@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FixTheAC : MonoBehaviour
+public class FixTheAC : MonoBehaviour, ITask
 {
     [SerializeField] private TaskManager taskManager;
     [SerializeField] private string taskName;
@@ -10,10 +10,21 @@ public class FixTheAC : MonoBehaviour
     [SerializeField] private Cloth cloth;
     [SerializeField] private Vector3 wind;
 
-    private void OnDisable()
+    public void OnTaskActivated(string name)
     {
-        cloth.externalAcceleration = wind;
-        currectProgress = 0f;
+        if (name == taskName)
+        {
+            currectProgress = 0f;
+            cloth.externalAcceleration = Vector3.zero;
+        }
+    }
+
+    public void OnTaskCompleted(string name)
+    {
+        if (name == taskName)
+        {
+            cloth.externalAcceleration = wind;
+        }
     }
 
     void Update()
@@ -27,13 +38,9 @@ public class FixTheAC : MonoBehaviour
             if (currectProgress >= progressComplete)
             {
                 PlayerController.canMove = true;
-                cloth.externalAcceleration = wind;
+                //cloth.externalAcceleration = wind;
                 taskManager.CompleteTask(taskName);
             }
-        }
-        if (taskManager.IsTaskActive(taskName))
-        {
-            cloth.externalAcceleration = Vector3.zero;
         }
     }
 }

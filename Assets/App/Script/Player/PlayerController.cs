@@ -16,7 +16,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 7f;
     [SerializeField] private bool isSprinting = false;
     [SerializeField] private Animator animator;
+    private float speed;
     private float currentSpeed;
+    private float dirX;
+    private float dirY;
+    private bool isMoving;
 
     [Header("Stamina")]
     [SerializeField] private float maxStamina = 100f;
@@ -61,16 +65,22 @@ public class PlayerController : MonoBehaviour
     {
         currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
         Vector2 direction = moveAction.ReadValue<Vector2>();
-        Vector3 move = (transform.forward * direction.y) + (transform.right * direction.x);
+        Vector3 move = (transform.forward * direction.y) + (transform.right * direction.x * 0.5f);
         move.Normalize(); // Pastikan gerakan diagonal tidak lebih cepat
         controller.Move(move * currentSpeed * Time.deltaTime);
 
         // Animation Speed control
-        //animator.SetFloat("Speed", direction.magnitude);
-        //animator.SetFloat("Direction", direction.y);
-        direction.Normalize();
-        //animator.SetFloat("InputX", direction.x);
-        //animator.SetFloat("InputY", direction.y);
+        if (!isMoving) 
+        {
+            currentSpeed = 0f; 
+        }
+        speed = Mathf.SmoothStep(speed, currentSpeed, 0.5f);
+        animator.SetFloat("Speed", speed);
+
+        dirX = Mathf.SmoothStep(dirX, direction.x, 0.5f);
+        dirY = Mathf.SmoothStep(dirY, direction.y, 0.5f);
+        animator.SetFloat("InputX", dirX);
+        animator.SetFloat("InputY", dirY);
     }
 
     private void onLook() { 
@@ -86,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     private void onSprint()
     {
-        bool isMoving = moveAction.ReadValue<Vector2>().magnitude > 0.1f;
+        isMoving = moveAction.ReadValue<Vector2>().magnitude > 0.1f;
         if (sprintAction.WasPressedThisFrame() && isMoving && currentStamina > 0)
         {
             isSprinting = true;

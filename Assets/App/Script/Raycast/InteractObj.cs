@@ -23,7 +23,8 @@ public class InteractObj : MonoBehaviour
             }
             else
             {
-                Debug.Log("Membutukan " + needItem + " untuk Interaksi");
+                Debug.Log("Membutuhkan " + needItem + " untuk Interaksi");
+                taskScriptToEnable.enabled = false;
             }
         }
     }

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PickupObj : MonoBehaviour, IPickupable
 {
     [SerializeField] Transform handParent;
+    [SerializeField] private Transform drop;
     private Rigidbody rb;
     [SerializeField] private bool canPick = true;
 
@@ -26,7 +27,7 @@ public class PickupObj : MonoBehaviour, IPickupable
         }
         else if (PlayerController.pick.WasPressedThisFrame() && canPick == false)
         {
-            OnDrop(transform.position + transform.TransformDirection(Vector3.forward) * 1.5f);
+            OnDrop(drop);
         }
     }
 
@@ -43,12 +44,13 @@ public class PickupObj : MonoBehaviour, IPickupable
         transform.localRotation = Quaternion.identity;
     }
 
-    public void OnDrop(Vector3 dropPosition)
+    public void OnDrop(Transform drop)
     {
         currentlyHeldItem = null;
         canPick = true;
         transform.SetParent(null);
-        transform.position = dropPosition;
+        //transform.localPosition = new Transform(drop);
+        gameObject.transform.position = drop.position;
 
         rb.isKinematic = false;
         rb.useGravity = true;

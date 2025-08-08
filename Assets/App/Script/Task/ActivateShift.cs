@@ -3,6 +3,8 @@ using UnityEngine;
 public class ActivateShift : MonoBehaviour
 {
     [SerializeField] private NPCPatrol[] NPC;
+    [SerializeField] private TaskManager taskManager;
+    [SerializeField] private MonoBehaviour[] scripts;
 
     void Update()
     {
@@ -12,8 +14,12 @@ public class ActivateShift : MonoBehaviour
             {
                 npc.enabled = true;
             }
+            foreach (MonoBehaviour script in scripts)
+            {
+                script.enabled = false;
+            }
+            taskManager.StartTask();
             Debug.Log("Pressed");
         }
-
     }
 }

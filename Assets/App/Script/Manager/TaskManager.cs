@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TaskManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class TaskManager : MonoBehaviour
         public float panicIncrease = 0.2f; // per second
     }
 
+    private List<ITask> reactiveTasks;
     public List<Task> tasks;
     public float minDelay = 5f;
     public float maxDelay = 10f;
@@ -21,8 +23,11 @@ public class TaskManager : MonoBehaviour
     public float panicLevel = 0f;
     public float maxPanic = 1f;
     public float panicDecayRate = 0.05f; // per second
-
-    private void Start()
+    private void Awake()
+    {
+        reactiveTasks = Object.FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ITask>().ToList();
+    }
+    public void StartTask()
     {
         StartCoroutine(RandomTaskActivator());
     }
@@ -66,26 +71,33 @@ public class TaskManager : MonoBehaviour
         return inactiveTasks[Random.Range(0, inactiveTasks.Count)];
     }
 
-    private void ActivateTask(Task task)
+    private void ActivateTask(Task task) // Ketika task aktif
     {
         task.isActive = true;
-        if (task.taskObject != null)
-            task.taskObject.SetActive(true);
+        if (task.taskScript != null)
+            task.taskScript.enabled = false;
 
+        foreach (var listener in reactiveTasks)
+        {
+            listener.OnTaskActivated(task.taskName);
+        }
         Debug.Log($"Task Aktif: {task.taskName}");
     }
 
-    public void CompleteTask(string taskName)
+    public void CompleteTask(string taskName) // Ketika task mati
     {
         Task task = tasks.Find(t => t.taskName == taskName);
         if (task != null && task.isActive)
         {
             task.isActive = false;
-            task.taskScript.enabled = false;
+            //task.taskScript.enabled = false;
             PlayerController.canMove = true;
             //if (task.taskObject != null)
             //    task.taskObject.SetActive(false);
-
+            foreach (var listener in reactiveTasks)
+            {
+                listener.OnTaskCompleted(task.taskName);
+            }
             Debug.Log($"Task Selesai: {task.taskName}");
         }
     }
