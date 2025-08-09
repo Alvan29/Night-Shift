@@ -21,14 +21,13 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerManager.instance.canLook)
-        {
-            OnLook();
-        }
+        OnLook();
     }
 
     private void OnLook()
     {
+        if (!PlayerManager.instance.canLook) return;
+
         Vector2 lookInput = inputController.lookAction.ReadValue<Vector2>();
         lookInput.Normalize();
         body.transform.Rotate(Vector3.up, lookInput.x * Time.deltaTime * lookSensitivity); // Player body

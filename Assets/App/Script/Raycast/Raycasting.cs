@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.WSA;
 
 public class Raycasting : MonoBehaviour
 {
@@ -9,6 +8,32 @@ public class Raycasting : MonoBehaviour
     [SerializeField] float maxDistance;
     [SerializeField] float toTarget;
     void Update()
+    {
+        HandleRaycast();
+        if (targetObject != null && InputController.instance.interact.WasPressedThisFrame())
+        {
+            HandleAllInteractions();
+        }
+    }
+    private void HandleAllInteractions()
+    {
+        // Prioritaskan urutan pengecekan interface
+        if (TryInteract<IInteractable>(x => x.Interact())) return;
+
+        Debug.Log("No compatible interface found");
+    }
+    private bool TryInteract<T>(System.Action<T> action) where T : class
+    {
+        T component = targetObject.GetComponent<T>();
+        if (component != null)
+        {
+            action(component);
+            return true;
+        }
+        return false;
+    }
+
+    private void HandleRaycast()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance))

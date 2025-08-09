@@ -2,12 +2,25 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class InputController : MonoBehaviour
 {
+    public static InputController instance;
     public PlayerInput playerInput;
     public InputAction moveAction;
     public InputAction lookAction;
     public InputAction sprintAction;
     public InputAction interact;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();

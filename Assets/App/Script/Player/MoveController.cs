@@ -30,16 +30,15 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerManager.instance.canMove)
-        {
-            OnMove();
-            OnSprint();
-            HandleStamina();
-        }
+        OnMove();
+        OnSprint();
+        HandleStamina();        
     }
 
     private void OnMove()
     {
+        if (!PlayerManager.instance.canMove) return;
+
         currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
         Vector2 direction = inputController.moveAction.ReadValue<Vector2>();
         Vector3 move = (transform.forward * direction.y) + (transform.right * direction.x * 0.5f);
