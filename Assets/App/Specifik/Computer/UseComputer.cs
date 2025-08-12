@@ -15,7 +15,6 @@ public class UseComputer : MonoBehaviour, IInteractable
     [Header("Settings")]
     [SerializeField] private float tweenDuration = 1f;
     [SerializeField] private float sitHeightOffset = -0.5f;
-    [SerializeField] private GameObject computer;
 
     private Vector3 originalPlayerPosition;
     private Vector3 originalCamPosition;
@@ -62,7 +61,6 @@ public class UseComputer : MonoBehaviour, IInteractable
 
         PlayerManager.instance.isUsingComputer = true;
         PlayerManager.instance.ViewFocus(true, tweenDuration, 30f, 60f);
-        //computer.SetActive(true);
     }
 
     private void StopUsingComputer()
@@ -85,7 +83,6 @@ public class UseComputer : MonoBehaviour, IInteractable
 
                 PlayerManager.instance.isUsingComputer = false;
                 PlayerManager.instance.ViewFocus(false, tweenDuration, 30f, 60f);
-                //computer.SetActive(false);
             });
     }
 }
