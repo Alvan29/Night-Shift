@@ -12,35 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d54553f17e43f4bab8998566feb921, type: 3}
   m_Name: ProblemServerData
   m_EditorClassIdentifier: 
-  problemName:
-  - Python Problem
-  - Fix The Problem
-  - Whats The Output
-  - The G.O.A.T
-  - XXX
-  notifyIcon:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  question:
-  - How to print Hello World in Pyhton?
-  - Is PHP a bad progamming languange?
-  - 35 * 90 = ...
-  - Which is the best? Messi or Ronaldo
-  - What's that in the window?
-  answer:
-  - print("Hello World")
-  - print("Hello World!")
-  - Console.Log("Hello World");
-  - Very bad
-  - I think so
-  - Not bad
-  - 1278
-  - 3150
-  - '''3150'''
-  - Huh?
-  - What?
-  - ???
-  - Messi
-  - Ronaldo
-  - I'm the best
+  questions:
+  - quetionProblem: Python Problem
+    questionText: How to print Hello World in Python?
+    options:
+    - print("Hello World)
+    - print("Hello World);
+    - Console.Log("Hello World");
+    correctOptionIndex: 0
+    questionImage: {fileID: 0}
+  - quetionProblem: Choose Wisely
+    questionText: Is PHP a bad progamming languange?
+    options:
+    - Very bad
+    - I think so
+    - Not bad
+    correctOptionIndex: 2
+    questionImage: {fileID: 0}
+  - quetionProblem: Whats The Output
+    questionText: 35 * 90 = ...
+    options:
+    - 1278
+    - 3150
+    - '''3150'''
+    correctOptionIndex: 1
+    questionImage: {fileID: 0}
+  - quetionProblem: The G.O.A.T
+    questionText: Which is best? Messi or Ronaldo
+    options:
+    - Messi
+    - Ronaldo
+    - I'm the best
+    correctOptionIndex: 0
+    questionImage: {fileID: 0}
+  - quetionProblem: XXX
+    questionText: What's that in the window?
+    options:
+    - Huh?
+    - What?
+    - ???
+    correctOptionIndex: 0
+    questionImage: {fileID: 0}
