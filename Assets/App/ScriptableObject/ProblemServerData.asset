@@ -21,7 +21,7 @@ MonoBehaviour:
     - Console.Log("Hello World");
     correctOptionIndex: 0
     questionImage: {fileID: 0}
-  - quetionProblem: Choose Wisely
+  - quetionProblem: Choose Wisely !!!
     questionText: Is PHP a bad progamming languange?
     options:
     - Very bad
@@ -38,12 +38,12 @@ MonoBehaviour:
     correctOptionIndex: 1
     questionImage: {fileID: 0}
   - quetionProblem: The G.O.A.T
-    questionText: Which is best? Messi or Ronaldo
+    questionText: Which is the best? Messi or Ronaldo
     options:
     - Messi
     - Ronaldo
     - I'm the best
-    correctOptionIndex: 0
+    correctOptionIndex: 1
     questionImage: {fileID: 0}
   - quetionProblem: XXX
     questionText: What's that in the window?
